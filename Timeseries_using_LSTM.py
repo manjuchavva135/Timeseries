@@ -49,3 +49,4 @@ history = model.fit(
     shuffle=False
 )
 y_pred = model.predict(X_test)
+print(y_pred)
