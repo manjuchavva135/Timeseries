@@ -25,3 +25,26 @@ def create_dataset(X, y, time_steps=1):
         Xs.append(v)
         ys.append(y.iloc[i + time_steps])
     return np.array(Xs), np.array(ys)
+time_steps = 10
+# reshape to [samples, time_steps, n_features]
+X_train, y_train = create_dataset(train, train.sine, time_steps)
+X_test, y_test = create_dataset(test, test.sine, time_steps)
+print(X_train.shape, y_train.shape)
+model = keras.Sequential()
+model.add(keras.layers.LSTM(
+  units=128,
+  input_shape=(X_train.shape[1], X_train.shape[2])
+))
+model.add(keras.layers.Dense(units=1))
+model.compile(
+  loss='mean_squared_error',
+  optimizer=keras.optimizers.Adam(0.001)
+)
+history = model.fit(
+    X_train, y_train,
+    epochs=30,
+    batch_size=16,
+    validation_split=0.1,
+    verbose=1,
+    shuffle=False
+)
