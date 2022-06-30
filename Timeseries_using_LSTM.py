@@ -48,5 +48,6 @@ history = model.fit(
     verbose=1,
     shuffle=False
 )
+
 y_pred = model.predict(X_test)
 print(y_pred)
